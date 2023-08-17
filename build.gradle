@@ -1,0 +1,36 @@
+import java.util.concurrent.TimeUnit
+
+buildscript {
+    ext.kotlin_version = '1.3.50'
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.0.1'
+    }
+}
+
+allprojects {
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+        google()
+        mavenCentral()
+    }
+
+    tasks.withType(JavaCompile) {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+project.configurations.all {
+    it.resolutionStrategy.cacheDynamicVersionsFor(5, TimeUnit.MINUTES)
+    it.resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS)
+}
