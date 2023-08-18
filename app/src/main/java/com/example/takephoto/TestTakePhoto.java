@@ -7,19 +7,21 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
+import android.widget.Toast;
 
 import androidx.core.content.FileProvider;
 
 import java.io.File;
 
 public class TestTakePhoto {
+
     /**
      * 拍照获取图片
      */
     public void doTakePhoto(Context mContext) {
         try {
             String mFileName = System.currentTimeMillis() + ".jpg";
-            File mPhotoDir = new File(mContext.getCacheDir(), "saveImage");
+            File mPhotoDir = new File(mContext.getExternalCacheDir(), "saveImage");
             if (!mPhotoDir.exists()) {
                 mPhotoDir.mkdirs();
             }
@@ -52,6 +54,7 @@ public class TestTakePhoto {
             ((Activity) mContext).startActivityForResult(intent, 1);
         } catch (Exception e) {
             e.printStackTrace();
+            Toast.makeText(mContext, "请检查相机权限是否开启", Toast.LENGTH_SHORT).show();
         }
     }
 
